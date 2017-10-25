@@ -127,7 +127,7 @@
 			return
 		}
 
-		var message = 'New order Created: Name: ' + orderInfo.name + ' Room: ' + orderInfo.room + ' Payment: ' + orderInfo.payment + ' Dorm: ' + orderInfo.dorm + ' Sugar: ' + orderInfo.sugar + ' Splenda: ' + orderInfo.splenda + ' Milk: ' + orderInfo.milk + ' Iced: ' + orderInfo.iced
+		var message = 'New order created: Name: ' + orderInfo.name + ' \n Room: ' + orderInfo.room + ' Payment: ' + orderInfo.payment + ' Dorm: ' + orderInfo.dorm + ' Sugar: ' + orderInfo.sugar + ' Splenda: ' + orderInfo.splenda + ' Milk: ' + orderInfo.milk + ' Iced: ' + orderInfo.iced
 
 		message += ' Creme: ' + orderInfo.creme
 
@@ -145,7 +145,7 @@
 			url:'https://production.turbo360-vector.com/expresso-eeonzr/sms?message=' + message + '&to=3476749151&key=b64dd743-3760-4425-bafd-37d99cce97b4',
 			type: 'GET',
 			data: {
-				format: 'json'
+				format: 'jsonp'
 			},
 			contentType: 'application/json; charset=utf-8',
 			dataType: 'jsonp',
@@ -155,6 +155,8 @@
 		})
 
 		window.location.href = '/thanks'
+
+
 	})
 
 	// Creates Order Array
