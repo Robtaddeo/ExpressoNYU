@@ -156,19 +156,23 @@
                   </div>
                 </div>
               </form>
-              <form action="/charge" method="post" id="payment-form">
-                <div class="form-row">
-                  <label for="card-element">
-                    Credit or debit card
+              <hr style="width: 100px;"/>
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="custom-control custom-checkbox">
+                    <input type="checkbox" id="option-venmo" class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Pay with Venmo</span>
                   </label>
-                  <div id="card-element">
-                    <!-- a Stripe Element will be inserted here. -->
-                  </div>
-
-                  <!-- Used to display form errors -->
-                  <div id="card-errors" role="alert"></div>
                 </div>
-              </form>
+                <div class="col-md-6">
+                  <label class="custom-control custom-checkbox">
+                    <input type="checkbox" id="option-cash" class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Pay with Cash</span>
+                  </label>
+                </div>
+              </div>
               <small>Don't see your dorm? <a href="/jobs"> Find out why </a></small>
             </center>
 

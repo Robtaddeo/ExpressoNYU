@@ -4,6 +4,8 @@
 
 	var turbo = Turbo({site_id: '59d7b5b28284bb0012db7235'})
 
+	// Creates User
+
 	$('#btn-register').click(function(event){
 		event.preventDefault()
 
@@ -21,6 +23,7 @@
 			return
 		}
 
+
 		if (visitor.email.length == 0){
 			alert('Please enter your email')
 			return
@@ -36,6 +39,8 @@
 			return
 		}
 
+
+
 		// console.log('Register: ' + JSON.stringify(visitor))
 		turbo.createUser(visitor, function(err, data){
 			if (err){
@@ -43,10 +48,11 @@
 				return
 			}
 
-			console.log('User Created: ' + JSON.stringify(data))
 			window.location.href = '/me'
 		})
 	})
+
+	// Creates Order
 
 	$('#btn-order').click(function(event){
 		event.preventDefault()
@@ -57,10 +63,26 @@
 		   var sugar = "no"
 		}
 
+		if (document.getElementById('option-venmo').checked && document.getElementById('option-cash').checked){
+			alert('Please pick only one form of payment')
+			return
+		}
+
+		if (!document.getElementById('option-venmo').checked && !document.getElementById('option-cash').checked){
+			alert('Please pick a form of payment')
+			return
+		}
+
 		if(document.getElementById('option-milk').checked) {
 			 var milk = "yes"
 		} else {
 			 var milk = "no"
+		}
+
+		if(document.getElementById('option-venmo').checked) {
+			 var payment = "Venmo"
+		} else {
+			 var payment = "Cash"
 		}
 
 		if(document.getElementById('option-splenda').checked) {
@@ -82,6 +104,7 @@
 			room: $('#purchase-room').val(),
 			dorm: $('#purchase-dorm').val(),
 			sugar: sugar,
+			payment: payment,
 			splenda: splenda,
 			milk: milk,
 			iced: ice,
@@ -104,6 +127,10 @@
 			return
 		}
 
+		var message = 'New order Created: Name: ' + orderInfo.name + ' Room: ' + orderInfo.room + ' Payment: ' + orderInfo.payment + ' Dorm: ' + orderInfo.dorm + ' Sugar: ' + orderInfo.sugar + ' Splenda: ' + orderInfo.splenda + ' Milk: ' + orderInfo.milk + ' Iced: ' + orderInfo.iced
+
+		message += ' Creme: ' + orderInfo.creme
+
 		// console.log('Register: ' + JSON.stringify(visitor))
 		turbo.create('order', orderInfo, function(err, data){
 			if (err){
@@ -111,19 +138,36 @@
 				return
 			}
 
-			console.log('Order Created: ' + JSON.stringify(data))
-			window.location.href = '/thanks'
+
 		})
+
+		$.ajax({
+			url:'https://production.turbo360-vector.com/expresso-eeonzr/sms?message=' + message + '&to=3476749151&key=b64dd743-3760-4425-bafd-37d99cce97b4',
+			type: 'GET',
+			data: {
+				format: 'json'
+			},
+			contentType: 'application/json; charset=utf-8',
+			dataType: 'jsonp',
+			async: false,
+			success: function(response) {
+			}
+		})
+
+		window.location.href = '/thanks'
 	})
 
+	// Creates Order Array
+
 	turbo.fetch('order', {dorm:'thirdNorthEast'}, function(err, data){
-		console.log('Orders Fetched: ' + JSON.stringify(data))
 		var order = data.results
 		var orderList = ''
 		order.forEach(function(order, i){
+
 			orderList += '<tr><td><i class="ti-close id="btn-delete""></i></td>'
-			orderList += '<td style="width: 150px;"><p>' + order.name + '</p></td>'
+			orderList += '<td style="width: 150px;"><p>' + order.name + '</></td>'
 			orderList += '<td><p>' + order.room + '</p></td>'
+			orderList += '<td><p>' + order.payment + '</p></td>'
 			orderList += '<td><p>' + order.creme + '</p></td>'
 			orderList += '<td><p>' + order.sugar + '</p></td>'
 			orderList += '<td><p>' + order.iced + '</p></td>'
@@ -136,13 +180,14 @@
 	})
 
 	turbo.fetch('order', {dorm:'thirdNorthSouth'}, function(err, data){
-		console.log('Orders Fetched: ' + JSON.stringify(data))
 		var order = data.results
 		var orderList = ''
 		order.forEach(function(order, i){
+
 			orderList += '<tr><td><i class="ti-close id="btn-delete""></i></td>'
-			orderList += '<td style="width: 150px;"><p>' + order.name + '</p></td>'
+			orderList += '<td style="width: 150px;"><p>' + order.name + '</></td>'
 			orderList += '<td><p>' + order.room + '</p></td>'
+			orderList += '<td><p>' + order.payment + '</p></td>'
 			orderList += '<td><p>' + order.creme + '</p></td>'
 			orderList += '<td><p>' + order.sugar + '</p></td>'
 			orderList += '<td><p>' + order.iced + '</p></td>'
@@ -155,13 +200,14 @@
 	})
 
 	turbo.fetch('order', {dorm:'thirdNorthNorth'}, function(err, data){
-		console.log('Orders Fetched: ' + JSON.stringify(data))
 		var order = data.results
 		var orderList = ''
 		order.forEach(function(order, i){
+
 			orderList += '<tr><td><i class="ti-close id="btn-delete""></i></td>'
-			orderList += '<td style="width: 150px;"><p>' + order.name + '</p></td>'
+			orderList += '<td style="width: 150px;"><p>' + order.name + '</></td>'
 			orderList += '<td><p>' + order.room + '</p></td>'
+			orderList += '<td><p>' + order.payment + '</p></td>'
 			orderList += '<td><p>' + order.creme + '</p></td>'
 			orderList += '<td><p>' + order.sugar + '</p></td>'
 			orderList += '<td><p>' + order.iced + '</p></td>'
@@ -174,6 +220,7 @@
 	})
 
 	// Login / Logout functions
+
 	$('#btn-login').click(function(event){
 			event.preventDefault()
 

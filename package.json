@@ -9,7 +9,9 @@
     "postinstall": "npm run build"
   },
   "dependencies": {
-    "turbo360": "latest"
+    "superagent": "^3.7.0",
+    "turbo360": "latest",
+    "twilio": "^3.9.0"
   },
   "devDependencies": {
     "express": "latest",
@@ -24,7 +26,9 @@
     "nodemon": "latest"
   },
   "functions": {
-    "turbo360": "latest"
+    "turbo360": "latest",
+    "superagent": "^3.7.0",
+    "twilio": "^3.9.0"
   },
   "deploy": [
     "index.html",
