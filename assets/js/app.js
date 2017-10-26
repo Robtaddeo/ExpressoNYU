@@ -55,7 +55,6 @@
 	// Creates Order
 
 	$('#btn-order').click(function(event){
-		event.preventDefault()
 
 		if(document.getElementById('option-sugar').checked) {
 		   var sugar = "yes"
@@ -127,35 +126,37 @@
 			return
 		}
 
-		var message = 'New order created: Name: ' + orderInfo.name + ' \n Room: ' + orderInfo.room + ' Payment: ' + orderInfo.payment + ' Dorm: ' + orderInfo.dorm + ' Sugar: ' + orderInfo.sugar + ' Splenda: ' + orderInfo.splenda + ' Milk: ' + orderInfo.milk + ' Iced: ' + orderInfo.iced
-
-		message += ' Creme: ' + orderInfo.creme
-
 		// console.log('Register: ' + JSON.stringify(visitor))
 		turbo.create('order', orderInfo, function(err, data){
 			if (err){
 				alert('Error:' + err.message)
 				return
 			}
-
-
 		})
 
-		$.ajax({
-			url:'https://production.turbo360-vector.com/expresso-eeonzr/sms?message=' + message + '&to=3476749151&key=b64dd743-3760-4425-bafd-37d99cce97b4',
-			type: 'GET',
-			data: {
-				format: 'jsonp'
-			},
-			contentType: 'application/json; charset=utf-8',
-			dataType: 'jsonp',
-			async: false,
-			success: function(response) {
+		var message = 'New order created: Name: ' + orderInfo.name + ' \n Room: ' + orderInfo.room + ' Payment: ' + orderInfo.payment + ' Dorm: ' + orderInfo.dorm + ' Sugar: ' + orderInfo.sugar + ' Splenda: ' + orderInfo.splenda + ' Milk: ' + orderInfo.milk + ' Iced: ' + orderInfo.iced
+		message += ' Creme: ' + orderInfo.creme
+
+		function test2(){
+	    // defer the execution of anonymous function for
+	    // 3 seconds and go to next line of code.
+	    setTimeout(function(){
+	        window.location.href = '/thanks'
+	    }, 300);
+
+				$.ajax({
+					url:'https://production.turbo360-vector.com/expresso-eeonzr/sms?message=' + message + '&to=3476749151&key=b64dd743-3760-4425-bafd-37d99cce97b4',
+					type: 'GET',
+					data: {
+						format: 'jsonp'
+					},
+					contentType: 'application/json; charset=utf-8',
+					dataType: 'jsonp',
+					async: false,
+				})
 			}
-		})
 
-		window.location.href = '/thanks'
-
+		test2()
 
 	})
 
