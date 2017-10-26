@@ -151,12 +151,52 @@
 						format: 'jsonp'
 					},
 					contentType: 'application/json; charset=utf-8',
-					dataType: 'jsonp',
+					dataType: "json",
 					async: false,
 				})
 			}
 
 		test2()
+
+	})
+
+	// Creates Order
+
+	$('#btn-apply').click(function(event){
+
+		var applicant = {
+
+			name: $('#apply-name').val(),
+			email: $('#apply-email').val(),
+			dorm: $('#apply-dorm').val(),
+
+		}
+
+		if (applicant.name.length == 0){
+			alert('Please enter your name')
+			return
+		}
+
+		if (applicant.email.length == 0){
+			alert('Please enter your email')
+			return
+		}
+
+		if (applicant.dorm == "dorm"){
+			alert('Please pick a valid dorm')
+			return
+		}
+
+		// console.log('Register: ' + JSON.stringify(visitor))
+		turbo.create('applicant', applicant, function(err, data){
+			if (err){
+				alert('Error:' + err.message)
+				return
+			}
+		})
+
+		document.getElementById("div-apply").innerHTML = '<h3 class="text-center" style="color:black;">Thanks!</h3><p class="text-center" style="color:black;">We\'ll get back to you as soon as possible!</p>'
+
 
 	})
 

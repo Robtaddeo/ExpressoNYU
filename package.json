@@ -40,7 +40,8 @@
     "buy.html",
     "me.html",
     "admin.html",
-    "login.html"
+    "login.html",
+    "apply.html"
   ],
   "app": "59d7b5b28284bb0012db7235"
 }
